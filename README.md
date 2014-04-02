@@ -1,6 +1,18 @@
 GA-iOS-SDK-new
 ==============
 
+**Changelog**
+
+**1.0.1**
+
+- Pushed source and latest libary file to public repository
+- Changed sdk_version, os_major and os_minor fields to match other SDK versions
+- Added an updateSessionID method
+
+**1.0.0**
+
+- initial commit of the SDK library
+
 ###Set-up
 
 Import the library by following the instructions [here](https://github.com/GameAnalytics/GA-iOS-SDK/blob/master/StaticLibInstallation.md).
