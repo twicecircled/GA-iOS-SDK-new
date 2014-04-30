@@ -15,7 +15,7 @@ GA-iOS-SDK-new
 
 ###Set-up
 
-Import the library by following the instructions [here](https://github.com/GameAnalytics/GA-iOS-SDK/blob/master/StaticLibInstallation.md).
+Import the library by following the instructions [here](http://support.gameanalytics.com/hc/en-us/articles/201813726-Download-and-setup).
 
 Initialise using the following:
 
