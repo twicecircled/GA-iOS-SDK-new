@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.resources = "Library/ios\ #{s.version}/GAResources.bundle"
   s.frameworks = 'CoreData', 'Foundation', 'SystemConfiguration','UIKit','Security'
   s.weak_frameworks = 'AdSupport'
-  s.xcconfig  =  { 'LIBRARY_SEARCH_PATHS' => '"$(PODS_ROOT)/#{s.name}"' }
+  s.xcconfig  =  { 'LIBRARY_SEARCH_PATHS' => "'$(PODS_ROOT)/#{s.name}'" }
 
   s.platform = :ios, '5.0'
   s.requires_arc = true
