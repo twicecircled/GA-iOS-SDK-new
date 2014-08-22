@@ -3,6 +3,12 @@ GA-iOS-SDK-new
 
 **Changelog**
 
+**1.0.2**
+
+- Reduced time between changing event status to sent and sending data to server.
+- Reset any events with status 'sending' to 'new' on launch.
+- SDK handles case when build is supplied as nil.
+
 **1.0.1**
 
 - Pushed source and latest libary file to public repository
