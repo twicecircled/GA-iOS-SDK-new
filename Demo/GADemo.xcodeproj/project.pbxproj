@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CD00F37418C9236D00EFB2AB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = CD00F37318C9236D00EFB2AB /* README.md */; };
-		CD81845C18EB4FA10076BA09 /* libGameAnalytics_1.0.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD81845B18EB4FA10076BA09 /* libGameAnalytics_1.0.1.a */; };
+		CD2853381949DBC30076C385 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDC92FE318AA98340097D27C /* AdSupport.framework */; };
+		CD5A96A419A6664900553D35 /* libGameAnalytics_1.0.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5A96A319A6664900553D35 /* libGameAnalytics_1.0.2.a */; };
 		CD916CA018DBD7E700E55E13 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD916C9E18DBD7E700E55E13 /* Main_iPhone.storyboard */; };
 		CD916CA118DBD8C300E55E13 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD916C9E18DBD7E700E55E13 /* Main_iPhone.storyboard */; };
 		CDC92F2718A964AC0097D27C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDC92F2618A964AC0097D27C /* Foundation.framework */; };
@@ -40,7 +41,8 @@
 
 /* Begin PBXFileReference section */
 		CD00F37318C9236D00EFB2AB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		CD81845B18EB4FA10076BA09 /* libGameAnalytics_1.0.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics_1.0.1.a; sourceTree = "<group>"; };
+		CD2853391949DF4B0076C385 /* GALogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GALogger.h; sourceTree = "<group>"; };
+		CD5A96A319A6664900553D35 /* libGameAnalytics_1.0.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics_1.0.2.a; sourceTree = "<group>"; };
 		CD916CA518DBD8F100E55E13 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		CDC92F2318A964AC0097D27C /* GADemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GADemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDC92F2618A964AC0097D27C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -87,8 +89,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD5A96A419A6664900553D35 /* libGameAnalytics_1.0.2.a in Frameworks */,
+				CD2853381949DBC30076C385 /* AdSupport.framework in Frameworks */,
 				CDC92F2918A964AC0097D27C /* CoreGraphics.framework in Frameworks */,
-				CD81845C18EB4FA10076BA09 /* libGameAnalytics_1.0.1.a in Frameworks */,
 				CDC92F2B18A964AC0097D27C /* UIKit.framework in Frameworks */,
 				CDC92F2718A964AC0097D27C /* Foundation.framework in Frameworks */,
 			);
@@ -211,7 +214,8 @@
 		CDC9BB7318E61ABA00EBFA86 /* GameAnalytics */ = {
 			isa = PBXGroup;
 			children = (
-				CD81845B18EB4FA10076BA09 /* libGameAnalytics_1.0.1.a */,
+				CD2853391949DF4B0076C385 /* GALogger.h */,
+				CD5A96A319A6664900553D35 /* libGameAnalytics_1.0.2.a */,
 				CDC9BB7C18E61C7000EBFA86 /* GameAnalytics.h */,
 				CDC9BB7D18E61C7000EBFA86 /* GAResources.bundle */,
 			);

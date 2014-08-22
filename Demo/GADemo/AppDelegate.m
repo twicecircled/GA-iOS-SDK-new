@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GameAnalytics.h"
+#import "GALogger.h"
 
 @implementation AppDelegate
 
@@ -22,9 +23,13 @@
 
     [GameAnalytics setDebugLogLevelVerbose:TRUE];
     [GameAnalytics enableExceptionHandler:TRUE];
+    [GALogger setDebugLogging:TRUE];
     
     [GameAnalytics initializeWithGameKey:@"a12ad7e0a9fd7e2421dd7812f7f82370" secretKey:@"d3a8c48ac4a9fb90f36dc61a565f3dec4fdbadc8"];
     [GameAnalytics setSendEventsInterval:10];
+    
+    
+    [GameAnalytics setUserID:@"ADADED35-45DB-4751-AD38-02E35D5E0B19"];
     
     //[GameAnalytics setMaximumEventStorage:6];
             
