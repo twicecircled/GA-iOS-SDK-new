@@ -49,6 +49,7 @@
     static dispatch_once_t oncePredicateBC;
     dispatch_once(&oncePredicateBC, ^{
         _sharedInstanceBC = [[self alloc] init];
+        [_sharedInstanceBC initialiseDB];
     });
     return _sharedInstanceBC;
 }
@@ -75,6 +76,38 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)initialiseDB {
+    
+    //
+    // If there are any events in the database with status GAStatusTypeSending when a GABatchController
+    // is initialised, the previous run of the application must have crashed. These will block any more
+    // uploads so we must reset their status to GAStatusTypeNew and they will upload again
+    //
+
+    [GALogger d:@"GABatchController initialiseDB"];
+
+    // Grab a context
+    NSManagedObjectContext *bgContext = [[GACoreDataController sharedInstance] backgroundContext];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"status = %d", GAStatusTypeSending];
+    
+    NSArray *results = [GACoreDataHelper searchObjectsInContext:bgContext
+                                                     entityName:@"GAEvents"
+                                                      predicate:predicate
+                                                        sortKey:@"eventIdx"
+                                                  sortAscending:TRUE];
+    
+    if ([results count]) {
+        [GALogger d:@"%lu event(s) found of status 'Sending' to be reset to 'New' - previous crash implied", (unsigned long)[results count]];
+
+        for (GAEvents *event in results) {
+            event.status = GAStatusTypeNew;
+        }
+        [bgContext _GA_saveContextSilent];
+    }
+
 }
 
 - (void)run {
@@ -262,15 +295,6 @@
         results = [results filteredArrayUsingPredicate:predicate];
 
         [GALogger d:@"%lu of same gameKey and secretKey", (unsigned long)[results count]];
-        
-        //
-        // Set the status on these events to prevent any other thread from uploading them
-        //
-        
-        for (GAEvents *event in results) {
-            event.status = [NSNumber numberWithInt:GAStatusTypeSending];
-        }
-        [bgContext _GA_saveContextSilent];
         
         //
         // Now upload them

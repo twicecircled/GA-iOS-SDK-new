@@ -29,6 +29,12 @@
     
     self.eventIDs = eventIDs;
     
+    // Set the status on these events to prevent any other thread from uploading them
+    
+    [self setEventStatus:GAStatusTypeSending];
+
+    // Start the connection
+    
     self.receivedData = [NSMutableData dataWithCapacity: 0];
     NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:request
                                                                    delegate:self];
@@ -39,7 +45,13 @@
         //
         self.receivedData = nil;
         [GALogger w:@"Connection Failed"];
-        
+
+        //
+        // Set status back here just in case the delegate doesn't fire
+        // May occur under extreme low memory conditions
+        //
+        [self setEventStatusBasedOnCachingOptions];
+
     } else {
         [GALogger d:@"Connection Made"];
     }
@@ -74,16 +86,7 @@
     // inform the user
     [GALogger w:@"Connection failed! Error - %@ %@", [error localizedDescription], [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]];
 
-    // Check if we are caching locally
-    GABatchController *bc = [GABatchController sharedInstance];
-    if (bc.localCaching) {
-        // We are caching so reset these events to try again
-        [self setEventStatus:GAStatusTypeNew];
-    } else {
-        // We are NOT caching so discard these events
-        [self setEventStatus:GAStatusTypeReadyToDelete];
-    }
-
+    [self setEventStatusBasedOnCachingOptions];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -114,16 +117,7 @@
         // Response was an error condition. Show message and reset events
         [self showErrorMessageFromResponse:self.httpResponse withData:self.receivedData];
 
-        // Check if we are caching locally
-        GABatchController *bc = [GABatchController sharedInstance];
-        if (bc.localCaching) {
-            // We are caching so reset these events to try again
-            [self setEventStatus:GAStatusTypeNew];
-        } else {
-            // We are NOT caching so discard these events
-            [self setEventStatus:GAStatusTypeReadyToDelete];
-        }
-
+        [self setEventStatusBasedOnCachingOptions];
     }
     
     [[GABatchController sharedInstance] checkForEventsToDelete];
@@ -131,6 +125,20 @@
     connection = nil;
     self.receivedData = nil;
     self.httpResponse = nil;
+}
+
+- (void)setEventStatusBasedOnCachingOptions {
+
+    // Check if we are caching locally
+    GABatchController *bc = [GABatchController sharedInstance];
+    if (bc.localCaching) {
+        // We are caching so reset these events to try again
+        [self setEventStatus:GAStatusTypeNew];
+    } else {
+        // We are NOT caching so discard these events
+        [self setEventStatus:GAStatusTypeReadyToDelete];
+    }
+
 }
 
 - (void)setEventStatus:(GAStatusType)targetStatus {

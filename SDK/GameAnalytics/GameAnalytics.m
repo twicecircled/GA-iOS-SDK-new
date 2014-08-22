@@ -126,6 +126,17 @@ void ga_embedded_uncaughtExceptionHandler(NSException *exception) {
     [bc run];
 }
 
++ (NSString *)defaultBuild {
+   
+    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    if (![build length]) {
+        [GALogger w:@"CFBundleVersion was not found in the application info.plist"];
+        build = @"unknown";
+    }
+    
+    return build;
+}
+
 + (void)initializeWithGameKey:(NSString *)gameKey secretKey:(NSString *)secretKey build:(NSString *)build {
 
     GameAnalytics *ga = [GameAnalytics sharedInstance];
@@ -137,7 +148,7 @@ void ga_embedded_uncaughtExceptionHandler(NSException *exception) {
     
     ga.gameKey = gameKey;
     ga.secretKey = secretKey;
-    ga.build = build;
+    ga.build = [build length] ? build : [GameAnalytics defaultBuild];
 
     // Initialise a GABatchController, but don't run yet
     GABatchController *bc = [GABatchController sharedInstance];
@@ -150,11 +161,7 @@ void ga_embedded_uncaughtExceptionHandler(NSException *exception) {
 
 + (void)initializeWithGameKey:(NSString *)gameKey secretKey:(NSString *)secretKey {
 
-    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    if (![build length]) {
-        [GALogger w:@"CFBundleVersion was not found in the application info.plist"];
-        build = @"unknown";
-    }
+    NSString *build = [GameAnalytics defaultBuild];
     
     [GameAnalytics initializeWithGameKey:gameKey secretKey:secretKey build:build];
 }
